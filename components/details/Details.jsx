@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Image, Text, View, StyleSheet, Switch } from "react-native";
+import { Image, Text, View, StyleSheet, Switch, FlatList } from "react-native";
 import axios from "axios";
 import { isEnabled } from "react-native/Libraries/Pressability/PressabilityDebug";
 import { getFavouritesById, insertFavourite, removeFavourite } from "../dataBase/Database";
@@ -12,12 +12,10 @@ export default function Details({ route }){
     const [isEnabled, setIsEnabled] = useState(false)
 
     const toggleSwitch = () => {
-
-        console.log(details.title)
-
+        
         if(isEnabled==false){
 
-            insertFavourite(id, details.title,details.vote_average, details.poster_path)
+            insertFavourite(id, details.title,details.vote_average, details.poster_path, details.release_date)
 
             .then(() => {
                 console.log("movie inserted")
@@ -28,7 +26,7 @@ export default function Details({ route }){
 
         }else{
             
-            removeFavourite(id,details.title,details.vote_average, details.poster_path)
+            removeFavourite(id)
 
             .then(()=>{
                 console.log("movie removed")
@@ -67,6 +65,11 @@ export default function Details({ route }){
         
     }, [])
 
+    const renderItem = ({item}) =>{
+        return <Text style={styles.genreList}>{item.name}</Text>
+    }
+
+
     return(
         <>
             {details && (
@@ -87,9 +90,13 @@ export default function Details({ route }){
                     <View style={styles.rightImage}>
                     
                         <Text style={styles.coteMoyenne}>Cote moyenne: </Text>
-                        <Text style={styles.vote}>{details.vote_average}</Text>
+                        <Text style={styles.vote}>{parseFloat(details.vote_average).toFixed(1)}</Text>
                         <Text style={styles.genre}>genre(s): </Text>
-                    {/* <Text>{details.genres}</Text> */}
+                        <FlatList
+                            data={details.genres}
+                            renderItem={renderItem}
+                            keyExtractor={(item)=>item.id}
+                        />
                     </View>
                 </View>
                 <View style={styles.overview}>
@@ -124,6 +131,13 @@ const styles = StyleSheet.create({
     imageDetail:{
         flexDirection:"row"
     },
+    imageContainer: {
+        flex: 1,
+        height: 300
+    },
+    rightImage: {
+        flex: 1
+    },
 
     image: {
         height:300,
@@ -134,7 +148,9 @@ const styles = StyleSheet.create({
         textAlignVertical:"center",
         textAlign:"center",
         fontSize:14,
-        fontWeight:"bold"
+        fontWeight:"bold",
+        textDecorationLine:"underline"
+        
     },
 
     vote:{
@@ -148,20 +164,21 @@ const styles = StyleSheet.create({
         textAlignVertical:"center",
         textAlign:"center",
         fontSize:14,
+        fontWeight:"bold",
+        textDecorationLine:"underline"
+    },
+
+    genreList:{
+        textAlignVertical:"center",
+        textAlign:"center",
+        fontSize:14,
         fontWeight:"bold"
     },
 
     overview:{
         padding:10,
     },
-    imageContainer: {
-        flex: 1,
-        height: 300
-    },
-    rightImage: {
-        flex: 1
-    }
-
+  
 
 })
 

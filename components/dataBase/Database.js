@@ -23,7 +23,7 @@ export function deleteDatabase() {
 }
 
 export function loadDatabase(){
-    return querySql("create table if not exists favourites(id integer primary key not null, title text, rating text, image text)",[])
+    return querySql("create table if not exists favourites(id integer primary key not null, title text, rating text, image text, date text)",[])
 }
 
 export function getFavourites(){
@@ -33,8 +33,8 @@ export function getFavouritesById(id){
     return querySql("select * from favourites where id=?", [id])
 }
 
-export function insertFavourite(id, title, rating, image){
-    return querySql("insert into favourites(id, title, rating, image) values(?, ?, ?, ?)", [id, title, rating, image])
+export function insertFavourite(id, title, rating, image, date){
+    return querySql("insert into favourites(id, title, rating, image, date) values(?, ?, ?, ?, ?)", [id, title, rating, image, date])
 }
 
 export function removeFavourite(id){

@@ -3,7 +3,7 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 
 
-export default function MoviesItem({id, poster_path, title, overview, vote_average }){
+export default function MoviesItem({id, poster_path, title, overview, vote_average, release_date }){
 
     const navigation = useNavigation()
     
@@ -22,6 +22,7 @@ export default function MoviesItem({id, poster_path, title, overview, vote_avera
                 <View>
                     <Text>{title}</Text>
                     <Text>{vote_average}</Text>
+                    <Text>{release_date}</Text>
                 </View>
             </View>
         </Pressable>

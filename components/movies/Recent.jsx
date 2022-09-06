@@ -32,6 +32,7 @@ export default function Recent(){
         title={item.title}
         poster_path={item.poster_path}
         vote_average={item.vote_average}
+        release_date={item.release_date}
         ></MoviesItem>
     }
 

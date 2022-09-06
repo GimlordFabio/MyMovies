@@ -31,7 +31,8 @@ export default function Favs(){
         id={item.id}
         title={item.title}
         poster_path={item.image}
-        vote_average={item.rating}
+        vote_average={parseFloat(item.rating).toFixed(1)}
+        release_date={item.date}
         ></MoviesItem>
     }
 
