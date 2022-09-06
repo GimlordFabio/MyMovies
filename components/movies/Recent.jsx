@@ -29,7 +29,7 @@ export default function Recent(){
 
         return <MoviesItem 
         id={item.id}
-        original_title={item.title}
+        title={item.title}
         poster_path={item.poster_path}
         vote_average={item.vote_average}
         ></MoviesItem>

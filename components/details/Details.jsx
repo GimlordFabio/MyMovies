@@ -1,43 +1,107 @@
 import { useEffect, useState } from "react";
-import { Image, Text, View, StyleSheet } from "react-native";
+import { Image, Text, View, StyleSheet, Switch } from "react-native";
 import axios from "axios";
+import { isEnabled } from "react-native/Libraries/Pressability/PressabilityDebug";
+import { getFavouritesById, insertFavourite, removeFavourite } from "../dataBase/Database";
 
 export default function Details({ route }){
 
     const { id } = route.params
 
     const [details, setDetails] = useState()
+    const [isEnabled, setIsEnabled] = useState(false)
+
+    const toggleSwitch = () => {
+
+        console.log(details.title)
+
+        if(isEnabled==false){
+
+            insertFavourite(id, details.title,details.vote_average, details.poster_path)
+
+            .then(() => {
+                console.log("movie inserted")
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+
+        }else{
+            
+            removeFavourite(id,details.title,details.vote_average, details.poster_path)
+
+            .then(()=>{
+                console.log("movie removed")
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+            
+        }
+        setIsEnabled(previousState => !previousState)
+    }
+    
 
     useEffect(() => {
 
+
         axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=c9e23b610c2f0c1040a493fc10ce5aaf&language=fr-FR`)
+
             .then(({data}) =>{
                 setDetails(data)
                 console.log(data)
             })
+            .catch((err)=>{
+                console.log(err)
+            })
+        
+        getFavouritesById(id)
+            .then((data)=>{
+                if(data.rows._array.length > 0){setIsEnabled(true)}
+            })
+            .catch((err)=>{
+            console.log(err)
+            })
+
+        
         
     }, [])
 
     return(
         <>
             {details && (
-                <><View style={styles.imageDetail}>
-                    <View>
+                <>
+                <View>
+                    <Text style={styles.title}>{details.title}</Text>
+                </View>
+                
+                <View style={styles.imageDetail}>
+                    <View style={styles.imageContainer}>
 
                         <Image style={styles.image} source={{
-                            uri: "https://image.tmdb.org/t/p/original/" + details.poster_path
+                            uri: "https://image.tmdb.org/t/p/original/" + details.backdrop_path
                         }}
                         ></Image>
 
                     </View>
-                    <View>
-                    <Text>{details.title}</Text>
-                    <Text>{details.vote_average}</Text>
+                    <View style={styles.rightImage}>
+                    
+                        <Text style={styles.coteMoyenne}>Cote moyenne: </Text>
+                        <Text style={styles.vote}>{details.vote_average}</Text>
+                        <Text style={styles.genre}>genre(s): </Text>
                     {/* <Text>{details.genres}</Text> */}
                     </View>
-                </View><View style={styles.overview}>
+                </View>
+                <View style={styles.overview}>
                         <Text>{details.overview}</Text>
-                    </View></>
+                </View>
+                <View>
+                    <Switch
+                    onValueChange={toggleSwitch}
+                    value={isEnabled}
+                    ></Switch>
+                </View>
+                </>
                 
             )}
         </>
@@ -48,17 +112,54 @@ export default function Details({ route }){
 
 const styles = StyleSheet.create({
 
+    title:{
+        textAlignVertical:"center",
+        textAlign:"center",
+        padding:25,
+        fontSize:16,
+        fontWeight:"bold"
+        
+    },
+
     imageDetail:{
         flexDirection:"row"
     },
-    
+
     image: {
         height:300,
-        width:220
+        width:200
+    },
+
+    coteMoyenne:{
+        textAlignVertical:"center",
+        textAlign:"center",
+        fontSize:14,
+        fontWeight:"bold"
+    },
+
+    vote:{
+        textAlignVertical:"center",
+        textAlign:"center",
+        fontSize:14,
+        fontWeight:"bold"
+    },
+
+    genre:{
+        textAlignVertical:"center",
+        textAlign:"center",
+        fontSize:14,
+        fontWeight:"bold"
     },
 
     overview:{
         padding:10,
+    },
+    imageContainer: {
+        flex: 1,
+        height: 300
+    },
+    rightImage: {
+        flex: 1
     }
 
 

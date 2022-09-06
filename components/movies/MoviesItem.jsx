@@ -3,7 +3,7 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 
 
-export default function MoviesItem({id, poster_path, original_title, overview, vote_average }){
+export default function MoviesItem({id, poster_path, title, overview, vote_average }){
 
     const navigation = useNavigation()
     
@@ -20,7 +20,7 @@ export default function MoviesItem({id, poster_path, original_title, overview, v
                     uri: "https://image.tmdb.org/t/p/original/" + poster_path
                 }}></Image>
                 <View>
-                    <Text>{original_title}</Text>
+                    <Text>{title}</Text>
                     <Text>{vote_average}</Text>
                 </View>
             </View>
