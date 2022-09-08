@@ -129,14 +129,16 @@ const styles = StyleSheet.create({
     },
 
     imageDetail:{
-        flexDirection:"row"
+        flexDirection:"row",
+        flex: 2
     },
     imageContainer: {
         flex: 1,
         height: 300
     },
     rightImage: {
-        flex: 1
+        flex: 1,
+        height: 300
     },
 
     image: {
@@ -145,31 +147,32 @@ const styles = StyleSheet.create({
     },
 
     coteMoyenne:{
-        textAlignVertical:"center",
         textAlign:"center",
         fontSize:14,
         fontWeight:"bold",
-        textDecorationLine:"underline"
-        
+        textDecorationLine:"underline",
+        paddingBottom: 5        
     },
 
     vote:{
-        textAlignVertical:"center",
+        
         textAlign:"center",
         fontSize:14,
         fontWeight:"bold"
     },
 
     genre:{
-        textAlignVertical:"center",
+        
         textAlign:"center",
         fontSize:14,
         fontWeight:"bold",
-        textDecorationLine:"underline"
+        textDecorationLine:"underline",
+        paddingTop:5,
+        paddingBottom:5
     },
 
     genreList:{
-        textAlignVertical:"center",
+        
         textAlign:"center",
         fontSize:14,
         fontWeight:"bold"
@@ -182,12 +185,3 @@ const styles = StyleSheet.create({
 
 })
 
-
-
-
-// rajouter un "switch" ou mettre un coeur "vide/rempli" ==> Image + Pressable et changer Image on press ? 
-
-
-// mettre une taille a  l image !!! pour pouvoir la voir affichée
-
-// regler le probleme de la liste de genre et comment l affichée

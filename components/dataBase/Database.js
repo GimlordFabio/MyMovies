@@ -41,5 +41,4 @@ export function removeFavourite(id){
     return querySql("delete from favourites where id=?", [id])
 }
 
-//  jouer avec le isFav ?? 
-/// ==>  mettre la totalité des films dans la database avec fav ou non pour une utilisation hors ligne ??
+

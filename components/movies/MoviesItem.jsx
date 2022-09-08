@@ -19,10 +19,12 @@ export default function MoviesItem({id, poster_path, title, overview, vote_avera
                 <Image style={styles.image} source={{
                     uri: "https://image.tmdb.org/t/p/original/" + poster_path
                 }}></Image>
-                <View>
-                    <Text>{title}</Text>
-                    <Text>{vote_average}</Text>
-                    <Text>{release_date}</Text>
+                <View style={styles.rightImage}>
+                    <View style={styles.underTitle}>
+                    <Text style={styles.title}>{title}</Text>
+                        <Text style={styles.coteMoyenne}>Cote Moyenne: </Text><Text style={styles.rating}>{vote_average}</Text>
+                        <Text style={styles.date}>Date de sortie: </Text><Text style={styles.release_date}>{release_date}</Text>
+                    </View>
                 </View>
             </View>
         </Pressable>
@@ -30,14 +32,63 @@ export default function MoviesItem({id, poster_path, title, overview, vote_avera
 }
 
 const styles = StyleSheet.create({
+    
+    item: {
+        flexDirection: "row",
+    },
+
     image: {
+        flex:2/5,
         height: 250,
         width: 150
     },
 
-    item: {
-        flex: 1,
-        flexDirection: "row",
+    rightImage: {
+        flex:3/5,
+        paddingHorizontal:10
+                
+    },
+
+    title: {
+        textAlign: "center",
+        fontWeight: "bold",
+        flexWrap:"wrap",
+        fontSize: 20,
+        paddingTop: 5,
+        paddingBottom: 15
+
+    },
+
+    underTitle: {
+        alignItems: "center"
+        
+    },
+
+    coteMoyenne: {
+        fontSize: 14,
+        fontWeight: "bold",
+        textDecorationLine:"underline",
+        paddingBottom:5
+    },
+
+    rating: {
+        fontSize: 14,
+        fontWeight: "bold",
+        paddingBottom:5
+    },
+
+    date: {
+        fontSize: 14,
+        fontWeight: "bold",
+        textDecorationLine:"underline",
+        paddingBottom:5
+    },
+
+    release_date: {
+        fontSize: 14,
+        fontWeight: "bold",
+        paddingBottom:5
     }
+
 })
 

@@ -14,8 +14,7 @@ export default function App() {
 
   useEffect(() => {
 
-    deleteDatabase()
-    .then(() => {
+    
       loadDatabase()
       .then(
         () => console.log("db loaded")
@@ -23,7 +22,6 @@ export default function App() {
       .catch(
         ()=> console.log(err)
       )
-    })
 
   },[])
 

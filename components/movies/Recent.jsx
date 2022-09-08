@@ -14,16 +14,22 @@ export default function Recent(){
     
 
     const [movies, setMovies] = useState([])
+    const [page, setPage] = useState(1)
 
     useEffect(() =>{
-      axios.get("https://api.themoviedb.org/3/movie/popular?api_key=c9e23b610c2f0c1040a493fc10ce5aaf&language=fr-FR&page=1") 
+
+        if(movies + 20 == page * 20){
+            
+      axios.get("https://api.themoviedb.org/3/movie/popular?api_key=c9e23b610c2f0c1040a493fc10ce5aaf&language=fr-FR&page=" + page) 
         .then(
             ({data}) => {
                 console.log(data.results)
-                setMovies(data.results)
+                setMovies(p => [...p, ...data.results])
             }
         )
-    }, [])
+        }
+
+    }, [page])
 
     const renderItem = ({item}) => {
 
@@ -44,6 +50,7 @@ export default function Recent(){
                 data={movies}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id}
+                onEndReached={() => setPage(p => p + 1)}
 
             ></FlatList>
         </View>
